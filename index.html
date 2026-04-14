@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Фотопилюли — Прогресс</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg:     #090910;
+    --card:   #111118;
+    --card2:  #17171f;
+    --border: rgba(255,255,255,0.07);
+    --purple: #7c6ff0;
+    --purple2:#a498f8;
+    --purple-dim: rgba(124,111,240,0.15);
+    --text:   #f0f0f6;
+    --text2:  #666680;
+    --text3:  #999ab5;
+    --stripe: rgba(255,255,255,0.025);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg);
+    background-image: repeating-linear-gradient(
+      to right,
+      transparent 0px, transparent 49px,
+      var(--stripe) 49px, var(--stripe) 50px
+    );
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+  }
+
+  .aperture { width:72px; height:72px; margin:0 auto 16px; position:relative; }
+  .aperture-ring {
+    width:72px; height:72px; border-radius:50%;
+    border:2.5px solid var(--purple);
+    position:absolute; top:0; left:0;
+    animation:rotate 10s linear infinite;
+    box-shadow:0 0 20px rgba(124,111,240,0.35);
+  }
+  .aperture-ring::before,.aperture-ring::after {
+    content:''; position:absolute; border-radius:50%;
+    width:10px; height:10px; background:var(--purple2);
+    left:50%; transform:translateX(-50%);
+    box-shadow:0 0 8px var(--purple2);
+  }
+  .aperture-ring::before { top:-5px; }
+  .aperture-ring::after  { bottom:-5px; }
+  .aperture-inner {
+    width:44px; height:44px; background:var(--bg);
+    border-radius:50%; position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%); border:2px solid #2a2a3a;
+    display:flex; align-items:center; justify-content:center; font-size:18px;
+  }
+  @keyframes rotate { to { transform:rotate(360deg); } }
+
+  nav {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 40px; border-bottom:1px solid var(--border);
+    position:sticky; top:0; background:rgba(9,9,16,0.92);
+    backdrop-filter:blur(12px); z-index:100;
+  }
+  .nav-logo { font-size:15px; font-weight:800; letter-spacing:-0.3px; }
+  .nav-logo span { color:var(--purple2); }
+  .nav-links { display:flex; gap:28px; }
+  .nav-links a {
+    font-size:13px; color:var(--text3); text-decoration:none;
+    display:flex; align-items:center; gap:6px; transition:color 0.2s;
+  }
+  .nav-links a:hover { color:var(--text); }
+  .nav-dot { width:6px; height:6px; border-radius:50%; background:var(--purple); }
+
+  .hero {
+    padding:40px 40px 52px; max-width:1100px; margin:0 auto;
+    text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:60px; left:50%;
+    transform:translateX(-50%); width:800px; height:400px;
+    background:radial-gradient(ellipse,rgba(124,111,240,0.09) 0%,transparent 65%);
+    pointer-events:none;
+  }
+  .hero-brand { font-size:42px; font-weight:900; letter-spacing:-2px; margin-bottom:4px; }
+  .hero-brand span { color:var(--purple2); }
+  .hero-tagline { font-size:13px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; font-weight:500; }
+  .hero-divider { width:48px; height:2px; background:var(--purple); margin:20px auto; border-radius:1px; }
+  .hero-sub { font-size:15px; color:var(--text3); line-height:1.7; max-width:480px; margin:0 auto 36px; }
+  .hero-sub strong { color:var(--text); font-weight:600; }
+
+  .how-cards {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:2px; max-width:740px; margin:0 auto;
+  }
+  .how-card {
+    background:var(--card); border:1px solid var(--border);
+    padding:20px 20px 18px; text-align:left;
+  }
+  .how-card:first-child { border-radius:14px 3px 3px 14px; }
+  .how-card:last-child  { border-radius:3px 14px 14px 3px; }
+  .how-icon  { font-size:22px; margin-bottom:10px; display:block; }
+  .how-title { font-size:13px; font-weight:700; margin-bottom:4px; }
+  .how-desc  { font-size:12px; color:var(--text2); line-height:1.5; }
+
+  .section { max-width:1100px; margin:0 auto; padding:48px 40px 0; }
+  .section-head {
+    font-size:11px; font-weight:600; letter-spacing:3px;
+    text-transform:uppercase; color:var(--text2);
+    margin-bottom:20px; display:flex; align-items:center; gap:12px;
+  }
+  .section-head::after { content:''; flex:1; height:1px; background:var(--border); }
+
+  .pills-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    border:1px solid var(--border); border-radius:16px; overflow:hidden;
+  }
+  .pill-row {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 24px; border-bottom:1px solid var(--border); transition:background 0.2s;
+  }
+  .pills-grid > .pill-row:nth-child(odd)       { border-right:1px solid var(--border); }
+  .pills-grid > .pill-row:nth-last-child(-n+2)  { border-bottom:none; }
+  .pill-row.released { background:rgba(124,111,240,0.03); }
+  .pill-row.today    { background:rgba(124,111,240,0.07); }
+  .pill-row.locked   { opacity:0.45; }
+  .pill-row-info { flex:1; }
+  .pill-row-num  { font-size:10px; color:var(--text2); font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:3px; }
+  .pill-row-name { font-size:14px; font-weight:600; }
+  .pill-row.locked .pill-row-name { color:var(--text2); }
+  .pill-row-btn {
+    width:36px; height:36px; border-radius:50%; display:flex;
+    align-items:center; justify-content:center; flex-shrink:0;
+    margin-left:16px; border:2px solid; transition:all 0.3s;
+  }
+  .pill-row-btn.open       { background:var(--purple); border-color:var(--purple); color:#fff; font-size:14px; font-weight:700; }
+  .pill-row-btn.new-badge  { background:var(--purple); border-color:var(--purple); color:#fff; font-size:10px; font-weight:800; letter-spacing:0.5px; animation:glow 2s ease-in-out infinite; }
+  .pill-row-btn.locked     { background:transparent; border-color:#333; color:#444; font-size:14px; }
+  @keyframes glow {
+    0%,100% { box-shadow:0 0 8px rgba(124,111,240,0.5); }
+    50%      { box-shadow:0 0 20px rgba(124,111,240,0.9); }
+  }
+
+  .leaderboard-wrap { max-width:1100px; margin:0 auto; padding:48px 40px 0; }
+  .lb-controls { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .sort-group { display:flex; gap:4px; }
+  .sort-btn {
+    padding:6px 14px; border-radius:8px; border:1px solid var(--border);
+    background:transparent; color:var(--text2); font-size:12px; font-weight:500;
+    cursor:pointer; transition:all 0.2s; font-family:inherit;
+  }
+  .sort-btn.active { background:var(--purple-dim); border-color:rgba(124,111,240,0.4); color:var(--purple2); }
+
+  .lb-table { border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .lb-header {
+    display:grid; grid-template-columns:40px 1fr auto 120px; gap:16px;
+    padding:10px 20px; background:var(--card2);
+    font-size:10px; font-weight:600; text-transform:uppercase;
+    letter-spacing:1.5px; color:var(--text2);
+    border-bottom:1px solid var(--border); align-items:center;
+  }
+  .lb-row {
+    display:grid; grid-template-columns:40px 1fr auto 120px;
+    gap:16px; padding:14px 20px;
+    border-bottom:1px solid var(--border); align-items:center;
+    transition:background 0.15s; position:relative;
+  }
+  .lb-row:last-child  { border-bottom:none; }
+  .lb-row:hover       { background:rgba(255,255,255,0.02); }
+  .lb-row.first       { background:rgba(124,111,240,0.06); }
+  .lb-row.first::before {
+    content:''; position:absolute; left:0; top:0; bottom:0;
+    width:3px; background:var(--purple); border-radius:0 2px 2px 0;
+  }
+  .lb-rank { font-size:13px; font-weight:700; color:var(--text2); text-align:center; }
+  .lb-row.first  .lb-rank { color:var(--purple2); }
+  .lb-row.second .lb-rank { color:#c0c0c0; }
+  .lb-row.third  .lb-rank { color:#cd7f32; }
+
+  .lb-student { display:flex; align-items:center; gap:12px; min-width:0; }
+  .lb-avatar  { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0; }
+  .lb-name    { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px; }
+  .lb-handle  { font-size:11px; color:var(--text2); }
+
+  .lb-dots { display:flex; gap:4px; align-items:center; flex-wrap:wrap; }
+  .dot {
+    width:20px; height:20px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:8px; font-weight:700; flex-shrink:0; transition:all 0.3s;
+  }
+  .dot.done  { background:var(--purple-dim); border:1.5px solid var(--purple); color:var(--purple2); }
+  .dot.avail { background:transparent; border:1.5px solid #333; color:#444; }
+  .dot.locked{ background:transparent; border:1.5px solid #222; color:#2a2a2a; }
+
+  .lb-photons { text-align:right; }
+  .photon-num { font-size:22px; font-weight:800; color:var(--purple2); line-height:1; display:block; }
+  .photon-sub { font-size:10px; color:var(--text2); text-transform:uppercase; letter-spacing:1px; }
+
+  .level-pill {
+    display:inline-block; margin-top:4px; padding:2px 8px;
+    border-radius:20px; font-size:10px; font-weight:700;
+    letter-spacing:0.5px; text-transform:uppercase;
+  }
+  .lv0 { background:rgba(80,80,100,0.2);  color:#666680; border:1px solid #333; }
+  .lv1 { background:rgba(94,203,138,0.1); color:#5ecb8a; border:1px solid rgba(94,203,138,0.3); }
+  .lv2 { background:rgba(124,111,240,0.12); color:var(--purple2); border:1px solid rgba(124,111,240,0.3); }
+  .lv3 { background:rgba(255,180,80,0.1);  color:#ffb450; border:1px solid rgba(255,180,80,0.3); }
+  .lv4 { background:rgba(255,100,100,0.1); color:#ff8080; border:1px solid rgba(255,100,100,0.3); }
+  .lv5 { background:linear-gradient(135deg,rgba(124,111,240,0.2),rgba(255,100,100,0.1)); color:var(--purple2); border:1px solid var(--purple); }
+
+  /* Mobile card layout */
+  .lb-card {
+    display:none; padding:14px 16px;
+    border-bottom:1px solid var(--border); position:relative;
+  }
+  .lb-card:last-child { border-bottom:none; }
+  .lb-card.first { background:rgba(124,111,240,0.06); }
+  .lb-card.first::before {
+    content:''; position:absolute; left:0; top:0; bottom:0;
+    width:3px; background:var(--purple); border-radius:0 2px 2px 0;
+  }
+  .lb-card-top { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .lb-card-rank { font-size:12px; font-weight:700; color:var(--text2); width:22px; text-align:center; flex-shrink:0; }
+  .lb-card.first  .lb-card-rank { color:var(--purple2); }
+  .lb-card.second .lb-card-rank { color:#c0c0c0; }
+  .lb-card.third  .lb-card-rank { color:#cd7f32; }
+  .lb-card-info { flex:1; min-width:0; }
+  .lb-card-photons { text-align:right; flex-shrink:0; }
+  .lb-card-dots { display:flex; gap:5px; flex-wrap:wrap; padding-left:32px; }
+
+  .prize-section { max-width:1100px; margin:48px auto 72px; padding:0 40px; }
+  .prize-card {
+    border:1px solid rgba(124,111,240,0.2); border-radius:20px; padding:48px;
+    text-align:center;
+    background: radial-gradient(ellipse at 50% -10%,rgba(124,111,240,0.1) 0%,transparent 60%), var(--card);
+    position:relative; overflow:hidden;
+  }
+  .prize-card::before {
+    content:''; position:absolute; inset:0;
+    background-image:repeating-linear-gradient(to right,transparent 0px,transparent 49px,var(--stripe) 49px,var(--stripe) 50px);
+    pointer-events:none;
+  }
+  .prize-lock  { font-size:52px; margin-bottom:20px; display:block; filter:grayscale(0.3); }
+  .prize-title { font-size:28px; font-weight:900; letter-spacing:-1px; text-transform:uppercase; margin-bottom:12px; }
+  .prize-title span { color:var(--purple2); }
+  .prize-desc  { color:var(--text3); font-size:15px; line-height:1.7; max-width:480px; margin:0 auto 24px; }
+  .prize-target {
+    display:inline-flex; align-items:center; gap:10px;
+    padding:12px 24px; border:1px dashed rgba(124,111,240,0.4);
+    border-radius:12px; font-size:14px; color:var(--purple2);
+    background:rgba(124,111,240,0.06);
+  }
+  .prize-target strong { font-size:20px; font-weight:800; }
+
+  .mini-progress { display:flex; gap:3px; justify-content:center; margin-top:28px; align-items:flex-end; height:32px; }
+  .mp-bar { width:10px; border-radius:3px; background:var(--card2); overflow:hidden; height:32px; display:flex; flex-direction:column; justify-content:flex-end; }
+  .mp-fill { background:linear-gradient(180deg,var(--purple2),var(--purple)); border-radius:3px; transition:height 1s ease; }
+
+  footer {
+    border-top:1px solid var(--border); padding:24px 40px;
+    max-width:1100px; margin:0 auto;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  footer span { font-size:12px; color:var(--text2); }
+
+  @media (max-width:700px) {
+    nav { padding:14px 16px; }
+    .nav-links { gap:14px; }
+    .nav-links a { font-size:12px; }
+    .hero { padding:32px 16px 28px; }
+    .hero-brand { font-size:30px; }
+    .how-cards { grid-template-columns:1fr; }
+    .how-card:first-child { border-radius:14px 14px 3px 3px; }
+    .how-card:last-child  { border-radius:3px 3px 14px 14px; }
+    .section,.leaderboard-wrap,.prize-section { padding-left:16px; padding-right:16px; }
+    .pills-grid { grid-template-columns:1fr; }
+    .pills-grid > .pill-row:nth-child(odd) { border-right:none; }
+    .pills-grid > .pill-row:nth-last-child(-n+2) { border-bottom:1px solid var(--border); }
+    .pills-grid > .pill-row:last-child { border-bottom:none; }
+    /* Hide desktop table rows, show mobile cards */
+    .lb-header { display:none; }
+    .lb-row    { display:none; }
+    .lb-card   { display:block; }
+    .prize-card { padding:28px 20px; }
+    .prize-title { font-size:22px; }
+    footer { flex-direction:column; gap:8px; text-align:center; padding:20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Фото<span>пилюли</span></div>
+  <div class="nav-links">
+    <a href="#pills"><span class="nav-dot"></span>Программа</a>
+    <a href="#progress"><span class="nav-dot"></span>Прогресс</a>
+    <a href="#prize"><span class="nav-dot"></span>Приз</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="aperture">
+    <div class="aperture-ring"></div>
+    <div class="aperture-inner">📷</div>
+  </div>
+  <div class="hero-brand">Фото<span>пилюли</span></div>
+  <div class="hero-tagline">9 поток · Режиссёрская версия</div>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">
+    За каждую сданную домашку ты получаешь <strong>фотоны</strong>.<br/>
+    Накопи их — и получишь реальный приз от Кости в конце потока.
+  </p>
+  <div class="how-cards">
+    <div class="how-card">
+      <span class="how-icon">📸</span>
+      <div class="how-title">Сдай домашку</div>
+      <div class="how-desc">Выполни задание к пилюле и скинь в чат с хэштегом #пилюляN</div>
+    </div>
+    <div class="how-card">
+      <span class="how-icon">⚡</span>
+      <div class="how-title">Получи фотоны</div>
+      <div class="how-desc">+100 фотонов за каждую пилюлю. Всего 9 пилюль — максимум 900 фотонов</div>
+    </div>
+    <div class="how-card">
+      <span class="how-icon">🎁</span>
+      <div class="how-title">Получи приз</div>
+      <div class="how-desc">Набери все фотоны и обменяй на секретный приз от Кости в конце потока</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="pills">
+  <div class="section-head">Программа потока</div>
+  <div class="pills-grid">
+    <div class="pill-row released">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 0</div>
+        <div class="pill-row-name">Настройки по любви</div>
+      </div>
+      <div class="pill-row-btn open">0</div>
+    </div>
+    <div class="pill-row released">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 1</div>
+        <div class="pill-row-name">Формула сильной фотографии</div>
+      </div>
+      <div class="pill-row-btn open">1</div>
+    </div>
+    <div class="pill-row released">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 2</div>
+        <div class="pill-row-name">Фон, который усиливает</div>
+      </div>
+      <div class="pill-row-btn open">2</div>
+    </div>
+    <div class="pill-row today">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 3</div>
+        <div class="pill-row-name">Свет, который выделяет</div>
+      </div>
+      <div class="pill-row-btn new-badge">NEW</div>
+    </div>
+    <div class="pill-row locked">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 4</div>
+        <div class="pill-row-name">Красивый герой в кадре</div>
+      </div>
+      <div class="pill-row-btn locked">🔒</div>
+    </div>
+    <div class="pill-row locked">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 5</div>
+        <div class="pill-row-name">Захватывающие фото-истории</div>
+      </div>
+      <div class="pill-row-btn locked">🔒</div>
+    </div>
+    <div class="pill-row locked">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 6</div>
+        <div class="pill-row-name">Объёмный кадр как из кино</div>
+      </div>
+      <div class="pill-row-btn locked">🔒</div>
+    </div>
+    <div class="pill-row locked">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 7</div>
+        <div class="pill-row-name">Сильный герой</div>
+      </div>
+      <div class="pill-row-btn locked">🔒</div>
+    </div>
+    <div class="pill-row locked">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 8</div>
+        <div class="pill-row-name">Обработка быстро и легко</div>
+      </div>
+      <div class="pill-row-btn locked">🔒</div>
+    </div>
+    <div class="pill-row locked">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 9</div>
+        <div class="pill-row-name">Уверенность и бесстрашие</div>
+      </div>
+      <div class="pill-row-btn locked">🔒</div>
+    </div>
+  </div>
+</div>
+
+<div class="leaderboard-wrap" id="progress">
+  <div class="lb-controls">
+    <div class="section-head" style="margin-bottom:0;flex:1">Таблица прогресса</div>
+    <div class="sort-group">
+      <button class="sort-btn active" onclick="sortBy('photons',this)">По фотонам</button>
+      <button class="sort-btn" onclick="sortBy('name',this)">По имени</button>
+    </div>
+  </div>
+  <div class="lb-table" style="margin-top:16px">
+    <div class="lb-header">
+      <div>#</div><div>Студент</div><div>Пилюли</div>
+      <div style="text-align:right">Фотоны</div>
+    </div>
+    <div id="leaderboard"></div>
+  </div>
+</div>
+
+<div class="prize-section" id="prize">
+  <div class="section-head">Призовой фонд</div>
+  <div class="prize-card">
+    <span class="prize-lock">🔐</span>
+    <div class="prize-title">Секретный <span>приз</span></div>
+    <div class="prize-desc">
+      Сдай домашку по каждой пилюле потока — и получишь особый приз от Кости.
+      Что именно — откроется, когда все замки будут сняты.
+    </div>
+    <div class="prize-target">
+      Цель: <strong>900 фотонов</strong> &nbsp;·&nbsp; 9 домашек из 9
+    </div>
+    <div class="mini-progress" id="mini-progress"></div>
+  </div>
+</div>
+
+<footer>
+  <span>Фотопилюли · 9 поток · Режиссёрская версия</span>
+  <span>Обновлено 13 апреля 2026</span>
+</footer>
+
+<script>
+var RELEASED = [0,1,2,3];
+var HW_PILLS = [1,2,3,4,5,6,7,8,9];
+var COLORS = [
+  '#7c6ff0','#e07c3a','#5ecb8a','#5b9cf6','#e74c8b',
+  '#f5a623','#4ec9c9','#e06b5c','#8bc34a','#9b7fe8',
+  '#f06292','#4db6ac','#ffd54f','#81d4fa','#a5d6a7',
+  '#ffab91','#b39ddb','#80cbc4'
+];
+
+var students = [
+  { name: 'Василий Бережной', handle: '@OmmmSweetOmmm',    hw: [2] },
+  { name: 'Виталий Крепак',   handle: '@hamturtl',          hw: [] },
+  { name: 'Николай',           handle: '@echonok',            hw: [] },
+  { name: 'Юлия Тимирханова', handle: '@timirkanova',        hw: [2] },
+  { name: 'Яна Кузовлева',    handle: '@kuzovleva_propravo', hw: [2] },
+  { name: 'Эдгар',             handle: '@still_EDG',          hw: [] },
+  { name: 'Юля Шутко',        handle: '@Muff1in1',           hw: [2] },
+  { name: 'Ольга Лихтарь',    handle: '@olalix',             hw: [2] },
+  { name: 'Ольга',             handle: '@Ольга',              hw: [2] },
+  { name: 'Анна Горбунова',   handle: '@Sabakabarabaka88',   hw: [2] },
+  { name: 'Lena',              handle: '@kolenka',            hw: [2] },
+  { name: 'Алиса Селезнёва',  handle: '@aliseseleznova',     hw: [2] },
+  { name: 'Роман',             handle: '@Ramon Cerveza',      hw: [2] },
+  { name: 'Анастасия',         handle: '@AnaBelash',          hw: [] },
+  { name: 'Ульяна Катунина',  handle: '@ulya_tut',           hw: [1] },
+  { name: 'Павел',             handle: '@poolguse',           hw: [1,3] },
+  { name: 'Максим Поляков',   handle: '@fieldman',           hw: [] },
+  { name: 'Семён Конончук',   handle: '@ksemyonv',           hw: [] }
+];
+
+students.forEach(function(s, i) {
+  s.color    = COLORS[i % COLORS.length];
+  s.initials = s.name.split(' ').map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase();
+  s.photons  = s.hw.length * 100;
+});
+
+function level(ph) {
+  if (ph >= 800) return { cls:'lv5', label:'Режиссёр' };
+  if (ph >= 600) return { cls:'lv4', label:'Мастер' };
+  if (ph >= 400) return { cls:'lv3', label:'Фотограф' };
+  if (ph >= 200) return { cls:'lv2', label:'Практик' };
+  if (ph >= 100) return { cls:'lv1', label:'Стажёр' };
+  return { cls:'lv0', label:'Новичок' };
+}
+
+/* Build a single dot element via DOM (no innerHTML) */
+function makeDot(p, hw, size) {
+  var done  = hw.indexOf(p) !== -1;
+  var avail = RELEASED.indexOf(p) !== -1 && !done;
+  var el    = document.createElement('div');
+  el.className = 'dot ' + (done ? 'done' : avail ? 'avail' : 'locked');
+  el.title  = done ? ('П' + p + ' сдана ✓') : avail ? ('П' + p + ' — ждём ДЗ') : ('П' + p + ' — заперта');
+  if (size) { el.style.width = size + 'px'; el.style.height = size + 'px'; }
+  if (!done) el.textContent = p;
+  return el;
+}
+
+/* Build avatar element */
+function makeAvatar(s) {
+  var el = document.createElement('div');
+  el.className = 'lb-avatar';
+  el.style.cssText = 'background:' + s.color + '1a;color:' + s.color + ';border:1.5px solid ' + s.color + '44';
+  el.textContent = s.initials;
+  return el;
+}
+
+/* Build level badge element */
+function makeBadge(lv) {
+  var el = document.createElement('span');
+  el.className = 'level-pill ' + lv.cls;
+  el.textContent = lv.label;
+  return el;
+}
+
+var sortMode = 'photons';
+
+function getSorted() {
+  return students.slice().sort(function(a,b) {
+    return sortMode === 'photons'
+      ? (b.photons - a.photons) || a.name.localeCompare(b.name)
+      : a.name.localeCompare(b.name);
+  });
+}
+
+function render() {
+  var sorted = getSorted();
+  var lb = document.getElementById('leaderboard');
+  lb.textContent = ''; // clear safely
+
+  sorted.forEach(function(s, idx) {
+    var rank    = sortMode === 'photons' ? idx + 1 : null;
+    var rankCls = rank===1 ? 'first' : rank===2 ? 'second' : rank===3 ? 'third' : '';
+    var lv      = level(s.photons);
+
+    /* ── Desktop row ── */
+    var row = document.createElement('div');
+    row.className = 'lb-row ' + rankCls;
+
+    var rankDiv = document.createElement('div');
+    rankDiv.className = 'lb-rank';
+    rankDiv.textContent = rank ? '#' + rank : '—';
+
+    var studentDiv = document.createElement('div');
+    studentDiv.className = 'lb-student';
+    var nameWrap = document.createElement('div');
+    var nameEl   = document.createElement('div');
+    nameEl.className = 'lb-name';
+    nameEl.textContent = s.name;
+    var handleEl = document.createElement('div');
+    handleEl.className = 'lb-handle';
+    handleEl.textContent = s.handle;
+    nameWrap.appendChild(nameEl);
+    nameWrap.appendChild(handleEl);
+    studentDiv.appendChild(makeAvatar(s));
+    studentDiv.appendChild(nameWrap);
+
+    var dotsDiv = document.createElement('div');
+    dotsDiv.className = 'lb-dots';
+    HW_PILLS.forEach(function(p){ dotsDiv.appendChild(makeDot(p, s.hw)); });
+
+    var photonsDiv = document.createElement('div');
+    photonsDiv.className = 'lb-photons';
+    var numEl = document.createElement('span');
+    numEl.className = 'photon-num';
+    numEl.textContent = s.photons;
+    var subEl = document.createElement('span');
+    subEl.className = 'photon-sub';
+    subEl.textContent = 'фотонов';
+    var badgeWrap = document.createElement('div');
+    badgeWrap.appendChild(makeBadge(lv));
+    photonsDiv.appendChild(numEl);
+    photonsDiv.appendChild(subEl);
+    photonsDiv.appendChild(badgeWrap);
+
+    row.appendChild(rankDiv);
+    row.appendChild(studentDiv);
+    row.appendChild(dotsDiv);
+    row.appendChild(photonsDiv);
+    lb.appendChild(row);
+
+    /* ── Mobile card ── */
+    var card = document.createElement('div');
+    card.className = 'lb-card ' + rankCls;
+
+    var cardTop = document.createElement('div');
+    cardTop.className = 'lb-card-top';
+
+    var cardRank = document.createElement('div');
+    cardRank.className = 'lb-card-rank';
+    cardRank.textContent = rank ? '#' + rank : '—';
+
+    var cardInfo = document.createElement('div');
+    cardInfo.className = 'lb-card-info';
+    var cName = document.createElement('div');
+    cName.className = 'lb-name';
+    cName.textContent = s.name;
+    var cHandle = document.createElement('div');
+    cHandle.className = 'lb-handle';
+    cHandle.textContent = s.handle;
+    cardInfo.appendChild(cName);
+    cardInfo.appendChild(cHandle);
+
+    var cardPhotons = document.createElement('div');
+    cardPhotons.className = 'lb-card-photons';
+    var cpNum = document.createElement('span');
+    cpNum.className = 'photon-num';
+    cpNum.style.fontSize = '18px';
+    cpNum.textContent = s.photons;
+    var cpSub = document.createElement('span');
+    cpSub.className = 'photon-sub';
+    cpSub.textContent = 'фотонов';
+    var cpBadge = document.createElement('div');
+    cpBadge.appendChild(makeBadge(lv));
+    cardPhotons.appendChild(cpNum);
+    cardPhotons.appendChild(cpSub);
+    cardPhotons.appendChild(cpBadge);
+
+    cardTop.appendChild(cardRank);
+    cardTop.appendChild(makeAvatar(s));
+    cardTop.appendChild(cardInfo);
+    cardTop.appendChild(cardPhotons);
+
+    var cardDots = document.createElement('div');
+    cardDots.className = 'lb-card-dots';
+    HW_PILLS.forEach(function(p){ cardDots.appendChild(makeDot(p, s.hw, 22)); });
+
+    card.appendChild(cardTop);
+    card.appendChild(cardDots);
+    lb.appendChild(card);
+  });
+}
+
+function sortBy(mode, btn) {
+  sortMode = mode;
+  document.querySelectorAll('.sort-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  render();
+}
+
+function renderMini() {
+  var mp = document.getElementById('mini-progress');
+  if (!mp) return;
+  mp.textContent = '';
+  students.forEach(function(s) {
+    var pct  = Math.round((s.photons / 900) * 100);
+    var bar  = document.createElement('div');
+    bar.className = 'mp-bar';
+    bar.title = s.name + ': ' + s.photons + ' фотонов';
+    var fill = document.createElement('div');
+    fill.className = 'mp-fill';
+    fill.style.height = pct + '%';
+    bar.appendChild(fill);
+    mp.appendChild(bar);
+  });
+}
+
+render();
+renderMini();
+</script>
+</body>
+</html>

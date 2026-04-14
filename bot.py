@@ -48,6 +48,10 @@ def save_students(students, sha):
 
 @bot.message_handler(func=lambda m: True, content_types=['text'])
 def handle_message(msg):
+    # Ignore messages from bots
+    if msg.from_user and msg.from_user.is_bot:
+        return
+
     chat_id = msg.chat.id
     tariff  = CHAT_TARIFFS.get(chat_id)
     if not tariff:

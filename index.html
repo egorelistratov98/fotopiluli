@@ -480,12 +480,13 @@ function prepareStudents(data) {
 }
 
 function level(ph) {
-  if (ph >= 800) return { cls:'lv5', label:'Режиссёр' };
-  if (ph >= 600) return { cls:'lv4', label:'Мастер' };
-  if (ph >= 400) return { cls:'lv3', label:'Фотограф' };
-  if (ph >= 200) return { cls:'lv2', label:'Практик' };
-  if (ph >= 100) return { cls:'lv1', label:'Стажёр' };
-  return { cls:'lv0', label:'Новичок' };
+  if (ph >= 900) return { cls:'lv5', label:'Мастер кадра' };
+  if (ph >= 700) return { cls:'lv4', label:'Художник' };
+  if (ph >= 500) return { cls:'lv3', label:'Фотошпион' };
+  if (ph >= 400) return { cls:'lv2', label:'Практик' };
+  if (ph >= 200) return { cls:'lv1', label:'Бывалый' };
+  if (ph >= 100) return { cls:'lv1', label:'Новичок' };
+  return { cls:'lv0', label:'Зритель' };
 }
 
 function makeDot(p, hw, size) {

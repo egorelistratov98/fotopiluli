@@ -204,12 +204,20 @@
     border-radius:20px; font-size:10px; font-weight:700;
     letter-spacing:0.5px; text-transform:uppercase;
   }
-  .lv0 { background:rgba(80,80,100,0.2);  color:#666680; border:1px solid #333; }
-  .lv1 { background:rgba(94,203,138,0.1); color:#5ecb8a; border:1px solid rgba(94,203,138,0.3); }
-  .lv2 { background:rgba(124,111,240,0.12); color:var(--purple2); border:1px solid rgba(124,111,240,0.3); }
-  .lv3 { background:rgba(255,180,80,0.1);  color:#ffb450; border:1px solid rgba(255,180,80,0.3); }
-  .lv4 { background:rgba(255,100,100,0.1); color:#ff8080; border:1px solid rgba(255,100,100,0.3); }
-  .lv5 { background:linear-gradient(135deg,rgba(124,111,240,0.2),rgba(255,100,100,0.1)); color:var(--purple2); border:1px solid var(--purple); }
+  /* Зритель — серый */
+  .lv0 { background:rgba(120,120,140,0.15); color:#888899; border:1px solid rgba(120,120,140,0.3); }
+  /* Новичок — зелёный */
+  .lv1 { background:rgba(94,203,138,0.12); color:#5ecb8a; border:1px solid rgba(94,203,138,0.35); }
+  /* Бывалый — голубой */
+  .lv2 { background:rgba(80,180,255,0.12); color:#50b4ff; border:1px solid rgba(80,180,255,0.35); }
+  /* Практик — фиолетовый */
+  .lv3 { background:rgba(124,111,240,0.15); color:var(--purple2); border:1px solid rgba(124,111,240,0.4); }
+  /* Фотошпион — оранжевый */
+  .lv4 { background:rgba(255,150,50,0.12); color:#ff9632; border:1px solid rgba(255,150,50,0.35); }
+  /* Художник — малиновый */
+  .lv5 { background:rgba(240,80,160,0.12); color:#f050a0; border:1px solid rgba(240,80,160,0.35); }
+  /* Мастер кадра — золотой */
+  .lv6 { background:rgba(255,200,50,0.12); color:#ffc832; border:1px solid rgba(255,200,50,0.4); }
 
   /* Mobile card layout */
   .lb-card {
@@ -480,11 +488,11 @@ function prepareStudents(data) {
 }
 
 function level(ph) {
-  if (ph >= 900) return { cls:'lv5', label:'Мастер кадра' };
-  if (ph >= 700) return { cls:'lv4', label:'Художник' };
-  if (ph >= 500) return { cls:'lv3', label:'Фотошпион' };
-  if (ph >= 400) return { cls:'lv2', label:'Практик' };
-  if (ph >= 200) return { cls:'lv1', label:'Бывалый' };
+  if (ph >= 900) return { cls:'lv6', label:'Мастер кадра' };
+  if (ph >= 700) return { cls:'lv5', label:'Художник' };
+  if (ph >= 500) return { cls:'lv4', label:'Фотошпион' };
+  if (ph >= 400) return { cls:'lv3', label:'Практик' };
+  if (ph >= 200) return { cls:'lv2', label:'Бывалый' };
   if (ph >= 100) return { cls:'lv1', label:'Новичок' };
   return { cls:'lv0', label:'Зритель' };
 }

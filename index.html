@@ -412,9 +412,14 @@
   <div class="lb-controls">
     <div class="section-head" style="margin-bottom:0;flex:1">Таблица прогресса</div>
     <div class="sort-group">
-      <button class="sort-btn active" onclick="sortBy('photons',this)">По фотонам</button>
-      <button class="sort-btn" onclick="sortBy('name',this)">По имени</button>
+      <button class="sort-btn filter-btn active" onclick="filterBy('все',this)">Все</button>
+      <button class="sort-btn filter-btn" onclick="filterBy('режиссёрская',this)">Режиссёрская</button>
+      <button class="sort-btn filter-btn" onclick="filterBy('массовый',this)">Массовый показ</button>
     </div>
+  </div>
+  <div class="sort-group" style="margin-bottom:12px;margin-top:8px">
+    <button class="sort-btn active" id="sort-photons" onclick="sortBy('photons',this)">По фотонам</button>
+    <button class="sort-btn" id="sort-name" onclick="sortBy('name',this)">По имени</button>
   </div>
   <div class="lb-table" style="margin-top:16px">
     <div class="lb-header">
@@ -456,32 +461,23 @@ var COLORS = [
   '#ffab91','#b39ddb','#80cbc4'
 ];
 
-var students = [
-  { name: 'Василий Бережной', handle: '@OmmmSweetOmmm',    hw: [2] },
-  { name: 'Виталий Крепак',   handle: '@hamturtl',          hw: [] },
-  { name: 'Николай',           handle: '@echonok',            hw: [] },
-  { name: 'Юлия Тимирханова', handle: '@timirkanova',        hw: [2] },
-  { name: 'Яна Кузовлева',    handle: '@kuzovleva_propravo', hw: [2] },
-  { name: 'Эдгар',             handle: '@still_EDG',          hw: [] },
-  { name: 'Юля Шутко',        handle: '@Muff1in1',           hw: [2] },
-  { name: 'Ольга Лихтарь',    handle: '@olalix',             hw: [2] },
-  { name: 'Ольга',             handle: '@Ольга',              hw: [2] },
-  { name: 'Анна Горбунова',   handle: '@Sabakabarabaka88',   hw: [2] },
-  { name: 'Lena',              handle: '@kolenka',            hw: [2] },
-  { name: 'Алиса Селезнёва',  handle: '@aliseseleznova',     hw: [2] },
-  { name: 'Роман',             handle: '@Ramon Cerveza',      hw: [2] },
-  { name: 'Анастасия',         handle: '@AnaBelash',          hw: [] },
-  { name: 'Ульяна Катунина',  handle: '@ulya_tut',           hw: [1] },
-  { name: 'Павел',             handle: '@poolguse',           hw: [1,3] },
-  { name: 'Максим Поляков',   handle: '@fieldman',           hw: [] },
-  { name: 'Семён Конончук',   handle: '@ksemyonv',           hw: [] }
-];
+var allStudents = [];
+var sortMode   = 'photons';
+var filterMode = 'все';
 
-students.forEach(function(s, i) {
-  s.color    = COLORS[i % COLORS.length];
-  s.initials = s.name.split(' ').map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase();
-  s.photons  = s.hw.length * 100;
-});
+function prepareStudents(data) {
+  return data.map(function(s, i) {
+    return {
+      name:     s.name,
+      handle:   s.handle,
+      hw:       s.hw || [],
+      tariff:   s.tariff || 'режиссёрская',
+      color:    COLORS[i % COLORS.length],
+      initials: s.name.split(' ').map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase(),
+      photons:  (s.hw || []).length * 100
+    };
+  });
+}
 
 function level(ph) {
   if (ph >= 800) return { cls:'lv5', label:'Режиссёр' };
@@ -492,7 +488,6 @@ function level(ph) {
   return { cls:'lv0', label:'Новичок' };
 }
 
-/* Build a single dot element via DOM (no innerHTML) */
 function makeDot(p, hw, size) {
   var done  = hw.indexOf(p) !== -1;
   var avail = RELEASED.indexOf(p) !== -1 && !done;
@@ -504,7 +499,6 @@ function makeDot(p, hw, size) {
   return el;
 }
 
-/* Build avatar element */
 function makeAvatar(s) {
   var el = document.createElement('div');
   el.className = 'lb-avatar';
@@ -513,7 +507,6 @@ function makeAvatar(s) {
   return el;
 }
 
-/* Build level badge element */
 function makeBadge(lv) {
   var el = document.createElement('span');
   el.className = 'level-pill ' + lv.cls;
@@ -521,10 +514,11 @@ function makeBadge(lv) {
   return el;
 }
 
-var sortMode = 'photons';
-
-function getSorted() {
-  return students.slice().sort(function(a,b) {
+function getFiltered() {
+  var list = filterMode === 'все'
+    ? allStudents
+    : allStudents.filter(function(s){ return s.tariff === filterMode; });
+  return list.slice().sort(function(a,b) {
     return sortMode === 'photons'
       ? (b.photons - a.photons) || a.name.localeCompare(b.name)
       : a.name.localeCompare(b.name);
@@ -532,27 +526,25 @@ function getSorted() {
 }
 
 function render() {
-  var sorted = getSorted();
+  var sorted = getFiltered();
   var lb = document.getElementById('leaderboard');
-  lb.textContent = ''; // clear safely
+  lb.textContent = '';
 
   sorted.forEach(function(s, idx) {
     var rank    = sortMode === 'photons' ? idx + 1 : null;
     var rankCls = rank===1 ? 'first' : rank===2 ? 'second' : rank===3 ? 'third' : '';
     var lv      = level(s.photons);
 
-    /* ── Desktop row ── */
+    /* Desktop row */
     var row = document.createElement('div');
     row.className = 'lb-row ' + rankCls;
-
     var rankDiv = document.createElement('div');
     rankDiv.className = 'lb-rank';
     rankDiv.textContent = rank ? '#' + rank : '—';
-
     var studentDiv = document.createElement('div');
     studentDiv.className = 'lb-student';
     var nameWrap = document.createElement('div');
-    var nameEl   = document.createElement('div');
+    var nameEl = document.createElement('div');
     nameEl.className = 'lb-name';
     nameEl.textContent = s.name;
     var handleEl = document.createElement('div');
@@ -562,11 +554,9 @@ function render() {
     nameWrap.appendChild(handleEl);
     studentDiv.appendChild(makeAvatar(s));
     studentDiv.appendChild(nameWrap);
-
     var dotsDiv = document.createElement('div');
     dotsDiv.className = 'lb-dots';
     HW_PILLS.forEach(function(p){ dotsDiv.appendChild(makeDot(p, s.hw)); });
-
     var photonsDiv = document.createElement('div');
     photonsDiv.className = 'lb-photons';
     var numEl = document.createElement('span');
@@ -580,24 +570,20 @@ function render() {
     photonsDiv.appendChild(numEl);
     photonsDiv.appendChild(subEl);
     photonsDiv.appendChild(badgeWrap);
-
     row.appendChild(rankDiv);
     row.appendChild(studentDiv);
     row.appendChild(dotsDiv);
     row.appendChild(photonsDiv);
     lb.appendChild(row);
 
-    /* ── Mobile card ── */
+    /* Mobile card */
     var card = document.createElement('div');
     card.className = 'lb-card ' + rankCls;
-
     var cardTop = document.createElement('div');
     cardTop.className = 'lb-card-top';
-
     var cardRank = document.createElement('div');
     cardRank.className = 'lb-card-rank';
     cardRank.textContent = rank ? '#' + rank : '—';
-
     var cardInfo = document.createElement('div');
     cardInfo.className = 'lb-card-info';
     var cName = document.createElement('div');
@@ -608,7 +594,6 @@ function render() {
     cHandle.textContent = s.handle;
     cardInfo.appendChild(cName);
     cardInfo.appendChild(cHandle);
-
     var cardPhotons = document.createElement('div');
     cardPhotons.className = 'lb-card-photons';
     var cpNum = document.createElement('span');
@@ -623,16 +608,13 @@ function render() {
     cardPhotons.appendChild(cpNum);
     cardPhotons.appendChild(cpSub);
     cardPhotons.appendChild(cpBadge);
-
     cardTop.appendChild(cardRank);
     cardTop.appendChild(makeAvatar(s));
     cardTop.appendChild(cardInfo);
     cardTop.appendChild(cardPhotons);
-
     var cardDots = document.createElement('div');
     cardDots.className = 'lb-card-dots';
     HW_PILLS.forEach(function(p){ cardDots.appendChild(makeDot(p, s.hw, 22)); });
-
     card.appendChild(cardTop);
     card.appendChild(cardDots);
     lb.appendChild(card);
@@ -641,7 +623,14 @@ function render() {
 
 function sortBy(mode, btn) {
   sortMode = mode;
-  document.querySelectorAll('.sort-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('#sort-photons,#sort-name').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  render();
+}
+
+function filterBy(mode, btn) {
+  filterMode = mode;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
   render();
 }
@@ -650,7 +639,7 @@ function renderMini() {
   var mp = document.getElementById('mini-progress');
   if (!mp) return;
   mp.textContent = '';
-  students.forEach(function(s) {
+  allStudents.forEach(function(s) {
     var pct  = Math.round((s.photons / 900) * 100);
     var bar  = document.createElement('div');
     bar.className = 'mp-bar';
@@ -663,8 +652,17 @@ function renderMini() {
   });
 }
 
-render();
-renderMini();
+// Load students from students.json
+fetch('students.json?v=' + Date.now())
+  .then(function(r){ return r.json(); })
+  .then(function(data) {
+    allStudents = prepareStudents(data);
+    render();
+    renderMini();
+  })
+  .catch(function(e) {
+    console.error('Failed to load students.json', e);
+  });
 </script>
 </body>
 </html>

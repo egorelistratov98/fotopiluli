@@ -4,11 +4,10 @@ import re
 import base64
 import logging
 import requests
-from telegram import Update
-from telegram.ext import Application, MessageHandler, filters, ContextTypes
+import telebot
 
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format='%(asctime)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 
@@ -21,6 +20,8 @@ CHAT_TARIFFS = {
     -1003811884464: 'режиссёрская',
     -1003754896568: 'массовый',
 }
+
+bot = telebot.TeleBot(TELEGRAM_TOKEN)
 
 
 def get_students():
@@ -45,18 +46,14 @@ def save_students(students, sha):
     })
 
 
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    msg = update.message
-    if not msg or not msg.text:
-        return
-
-    chat_id = msg.chat_id
+@bot.message_handler(func=lambda m: True, content_types=['text'])
+def handle_message(msg):
+    chat_id = msg.chat.id
     tariff  = CHAT_TARIFFS.get(chat_id)
     if not tariff:
         return
 
-    # Find pill numbers in hashtags: #пилюля1 .. #пилюля9
-    found = re.findall(r'#пилюля(\d+)', msg.text, re.IGNORECASE)
+    found = re.findall(r'#[Пп]илюля\s*(\d+)', msg.text)
     pills = [int(p) for p in found if 1 <= int(p) <= 9]
     if not pills:
         return
@@ -65,9 +62,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = f'@{sender.username}' if sender.username else None
     name     = f'{sender.first_name} {sender.last_name or ""}'.strip()
 
-    students, sha = get_students()
+    try:
+        students, sha = get_students()
+    except Exception as e:
+        logging.error(f'Failed to get students: {e}')
+        return
 
-    # Find student by username or name
     student = None
     if username:
         student = next(
@@ -81,10 +81,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     if not student:
-        # New student — add automatically
         student = {'name': name, 'handle': username or name, 'hw': [], 'tariff': tariff}
         students.append(student)
-        logging.info(f'New student added: {name} ({tariff})')
+        logging.info(f'New student: {name} ({tariff})')
 
     changed = False
     for pill in pills:
@@ -94,16 +93,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             changed = True
 
     if changed:
-        save_students(students, sha)
-        logging.info(f'Updated {name}: pills {pills}')
+        try:
+            save_students(students, sha)
+            logging.info(f'Updated {name}: pills {pills}')
+        except Exception as e:
+            logging.error(f'Failed to save: {e}')
 
 
-def main():
-    app = Application.builder().token(TELEGRAM_TOKEN).build()
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-    logging.info('Bot started')
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
-
-
-if __name__ == '__main__':
-    main()
+logging.info('Bot starting...')
+bot.infinity_polling(timeout=60, long_polling_timeout=60)

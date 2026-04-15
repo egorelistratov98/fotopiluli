@@ -100,6 +100,12 @@
     "tariff": "режиссёрская"
   },
   {
+    "name": "Алексей Павлов",
+    "handle": "@AlekseyPavlovPhotoVideo",
+    "hw": [],
+    "tariff": "закрытый"
+  },
+  {
     "name": "Алексей Бекреев",
     "handle": "Алексей Бекреев",
     "hw": [],
@@ -209,6 +215,12 @@
     "handle": "@sahih01",
     "hw": [],
     "tariff": "режиссёрская"
+  },
+  {
+    "name": "Артём Пылаев",
+    "handle": "@artempylaev",
+    "hw": [],
+    "tariff": "закрытый"
   },
   {
     "name": "Марина Ковалёва",
@@ -407,6 +419,12 @@
     "handle": "@kambievph",
     "hw": [],
     "tariff": "режиссёрская"
+  },
+  {
+    "name": "Юрий Мещерский",
+    "handle": "@Mochegon",
+    "hw": [],
+    "tariff": "закрытый"
   },
   {
     "name": "Никита Орлов",
@@ -614,85 +632,11 @@
     "tariff": "массовый"
   },
   {
-    "name": "Лидия Войвод",
-    "handle": "@lida_photo72",
-    "hw": [],
-    "tariff": "режиссёрская"
-  },
-  {
-    "name": "Максим Иванов",
-    "handle": "@chat_du_cheshire",
-    "hw": [],
-    "tariff": "массовый"
-  },
-  {
-    "name": "Екатерина Роттер",
-    "handle": "@ekaterinarotter",
-    "hw": [],
-    "tariff": "массовый"
-  },
-  {
-    "name": "Егор Леготин",
-    "handle": "@nblch",
-    "hw": [],
-    "tariff": "массовый"
-  },
-  {
-    "name": "Кристина Вербицкая",
-    "handle": "@ver_kristina",
-    "hw": [],
-    "tariff": "массовый"
-  },
-  {
-    "name": "Юстина Ляхович",
-    "handle": "@justyna_smile",
-    "hw": [],
-    "tariff": "массовый"
-  },
-  {
     "name": "Ольга",
     "handle": "Ольга",
     "hw": [
       2
     ],
     "tariff": "режиссёрская"
-  },
-  {
-    "name": "Евгений Тучков",
-    "handle": "@Balckhan",
-    "hw": [],
-    "tariff": "массовый"
-  },
-  {
-    "name": "Ivan",
-    "handle": "Ivan",
-    "hw": [
-      2
-    ],
-    "tariff": "режиссёрская"
-  },
-  {
-    "name": "Egor Silaev",
-    "handle": "Egor Silaev",
-    "hw": [
-      2
-    ],
-    "tariff": "массовый"
-  },
-  {
-    "name": "Аля",
-    "handle": "Аля",
-    "hw": [
-      2
-    ],
-    "tariff": "массовый"
-  },
-  {
-    "name": "Виктория Сидорова",
-    "handle": "Виктория Сидорова",
-    "hw": [
-      1
-    ],
-    "tariff": "массовый"
   }
 ]

@@ -4,24 +4,25 @@ import re
 import base64
 import logging
 import requests
-import telebot
+from flask import Flask, request
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 
-TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
-GITHUB_TOKEN   = os.environ['GITHUB_TOKEN']
-GITHUB_REPO    = 'egorelistratov98/fotopiluli'
-STUDENTS_FILE  = 'students.json'
+TELEGRAM_TOKEN      = os.environ['TELEGRAM_TOKEN']
+GITHUB_TOKEN        = os.environ['GITHUB_TOKEN']
+SALEBOT_WEBHOOK_URL = os.environ['SALEBOT_WEBHOOK_URL']
+GITHUB_REPO         = 'egorelistratov98/fotopiluli'
+STUDENTS_FILE       = 'students.json'
 
 CHAT_TARIFFS = {
     -1003811884464: 'режиссёрская',
     -1003754896568: 'массовый',
 }
 
-bot = telebot.TeleBot(TELEGRAM_TOKEN)
+app = Flask(__name__)
 
 
 def get_students():
@@ -46,29 +47,26 @@ def save_students(students, sha):
     })
 
 
-@bot.message_handler(func=lambda m: True, content_types=['text', 'photo', 'video', 'document'])
 def handle_message(msg):
-    # Ignore messages from bots
-    if msg.from_user and msg.from_user.is_bot:
+    from_user = msg.get('from', {})
+    if from_user.get('is_bot'):
         return
 
-    chat_id = msg.chat.id
-    logging.info(f'MSG received: chat_id={chat_id} type={msg.chat.type} from={msg.from_user.username if msg.from_user else "?"}')
-
+    chat_id = msg.get('chat', {}).get('id')
     tariff  = CHAT_TARIFFS.get(chat_id)
     if not tariff:
-        logging.info(f'chat_id={chat_id} not in CHAT_TARIFFS, skipping')
         return
 
-    text = msg.text or msg.caption or ''
+    text = msg.get('text') or msg.get('caption') or ''
     found = re.findall(r'#[Пп]илюля\s*(\d+)', text)
     pills = [int(p) for p in found if 1 <= int(p) <= 9]
     if not pills:
         return
 
-    sender   = msg.from_user
-    username = f'@{sender.username}' if sender.username else None
-    name     = f'{sender.first_name} {sender.last_name or ""}'.strip()
+    username = f'@{from_user["username"]}' if from_user.get('username') else None
+    first    = from_user.get('first_name', '')
+    last     = from_user.get('last_name', '')
+    name     = f'{first} {last}'.strip()
 
     try:
         students, sha = get_students()
@@ -108,5 +106,32 @@ def handle_message(msg):
             logging.error(f'Failed to save: {e}')
 
 
-logging.info('Bot starting...')
-bot.infinity_polling(timeout=60, long_polling_timeout=60)
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    update = request.get_json()
+
+    # Forward everything to SaleBot (activations, private messages, etc.)
+    try:
+        requests.post(SALEBOT_WEBHOOK_URL, json=update, timeout=3)
+    except Exception as e:
+        logging.warning(f'SaleBot forward failed: {e}')
+
+    # Process homework hashtags from group messages
+    if update and 'message' in update:
+        try:
+            handle_message(update['message'])
+        except Exception as e:
+            logging.error(f'handle_message error: {e}')
+
+    return 'OK', 200
+
+
+@app.route('/', methods=['GET'])
+def index():
+    return 'Bot is running', 200
+
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    logging.info('Bot starting (webhook mode)...')
+    app.run(host='0.0.0.0', port=port)

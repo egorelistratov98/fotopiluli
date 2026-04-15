@@ -46,7 +46,7 @@ def save_students(students, sha):
     })
 
 
-@bot.message_handler(func=lambda m: True, content_types=['text'])
+@bot.message_handler(func=lambda m: True, content_types=['text', 'photo', 'video', 'document'])
 def handle_message(msg):
     # Ignore messages from bots
     if msg.from_user and msg.from_user.is_bot:
@@ -57,7 +57,8 @@ def handle_message(msg):
     if not tariff:
         return
 
-    found = re.findall(r'#[Пп]илюля\s*(\d+)', msg.text)
+    text = msg.text or msg.caption or ''
+    found = re.findall(r'#[Пп]илюля\s*(\d+)', text)
     pills = [int(p) for p in found if 1 <= int(p) <= 9]
     if not pills:
         return

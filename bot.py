@@ -53,8 +53,11 @@ def handle_message(msg):
         return
 
     chat_id = msg.chat.id
+    logging.info(f'MSG received: chat_id={chat_id} type={msg.chat.type} from={msg.from_user.username if msg.from_user else "?"}')
+
     tariff  = CHAT_TARIFFS.get(chat_id)
     if not tariff:
+        logging.info(f'chat_id={chat_id} not in CHAT_TARIFFS, skipping')
         return
 
     text = msg.text or msg.caption or ''

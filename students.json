@@ -287,7 +287,9 @@
   {
     "name": "Елизавета К",
     "handle": "@mellamoliisa",
-    "hw": [],
+    "hw": [
+      3
+    ],
     "tariff": "массовый"
   },
   {

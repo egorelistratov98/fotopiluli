@@ -154,6 +154,28 @@
   }
   .sort-btn.active { background:var(--purple-dim); border-color:rgba(124,111,240,0.4); color:var(--purple2); }
 
+  .search-wrap { position:relative; margin-bottom:12px; }
+  .search-input {
+    width:100%; padding:10px 16px 10px 38px;
+    background:var(--card); border:1px solid var(--border);
+    border-radius:10px; color:var(--text); font-family:inherit;
+    font-size:13px; outline:none; transition:border-color 0.2s;
+  }
+  .search-input::placeholder { color:var(--text2); }
+  .search-input:focus { border-color:rgba(124,111,240,0.5); }
+  .search-icon {
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    color:var(--text2); font-size:14px; pointer-events:none;
+  }
+  .search-clear {
+    position:absolute; right:10px; top:50%; transform:translateY(-50%);
+    background:none; border:none; color:var(--text2); cursor:pointer;
+    font-size:16px; line-height:1; padding:2px 4px; display:none;
+  }
+  .search-clear:hover { color:var(--text); }
+  .lb-row.search-highlight { background:rgba(124,111,240,0.1); }
+  .lb-card.search-highlight { background:rgba(124,111,240,0.1); }
+
   .lb-table { border:1px solid var(--border); border-radius:16px; overflow:hidden; }
   .lb-header {
     display:grid; grid-template-columns:40px 1fr auto 120px; gap:16px;
@@ -429,6 +451,13 @@
     <button class="sort-btn active" id="sort-photons" onclick="sortBy('photons',this)">По фотонам</button>
     <button class="sort-btn" id="sort-name" onclick="sortBy('name',this)">По имени</button>
   </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="search-input" type="text"
+      placeholder="Найти по нику или имени (@username)"
+      oninput="onSearch(this.value)">
+    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+  </div>
   <div class="lb-table" style="margin-top:16px">
     <div class="lb-header">
       <div>#</div><div>Студент</div><div>Пилюли</div>
@@ -472,6 +501,7 @@ var COLORS = [
 var allStudents = [];
 var sortMode   = 'photons';
 var filterMode = 'все';
+var searchQuery = '';
 
 function prepareStudents(data) {
   return data.map(function(s, i) {
@@ -527,11 +557,31 @@ function getFiltered() {
   var list = filterMode === 'все'
     ? allStudents
     : allStudents.filter(function(s){ return s.tariff === filterMode; });
+  if (searchQuery) {
+    var q = searchQuery.replace(/^@/, '').toLowerCase();
+    list = list.filter(function(s) {
+      return s.handle.replace(/^@/, '').toLowerCase().indexOf(q) !== -1
+          || s.name.toLowerCase().indexOf(q) !== -1;
+    });
+  }
   return list.slice().sort(function(a,b) {
     return sortMode === 'photons'
       ? (b.photons - a.photons) || a.name.localeCompare(b.name)
       : a.name.localeCompare(b.name);
   });
+}
+
+function onSearch(val) {
+  searchQuery = val.trim();
+  document.getElementById('search-clear').style.display = searchQuery ? 'block' : 'none';
+  render();
+}
+
+function clearSearch() {
+  searchQuery = '';
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear').style.display = 'none';
+  render();
 }
 
 function render() {

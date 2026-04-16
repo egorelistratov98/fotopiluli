@@ -370,13 +370,17 @@
   {
     "name": "Кирилл",
     "handle": "@kirmkrv",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "режиссёрская"
   },
   {
     "name": "Иван Есаулов",
     "handle": "@sabotage_brewer",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "режиссёрская"
   },
   {
@@ -580,6 +584,7 @@
     "name": "Александр",
     "handle": "@notsouniqueid",
     "hw": [
+      1,
       2
     ],
     "tariff": "режиссёрская"
@@ -702,6 +707,7 @@
     "name": "Ольга",
     "handle": "@lelya_proart",
     "hw": [
+      1,
       2
     ],
     "tariff": "режиссёрская"

@@ -712,8 +712,9 @@ function renderMini() {
   });
 }
 
-// Load students from students.json
-fetch('students.json?v=' + Date.now())
+// Load students directly from GitHub (no Netlify rebuild needed)
+var STUDENTS_URL = 'https://raw.githubusercontent.com/egorelistratov98/fotopiluli/main/students.json';
+fetch(STUDENTS_URL + '?t=' + Date.now())
   .then(function(r){ return r.json(); })
   .then(function(data) {
     allStudents = prepareStudents(data);

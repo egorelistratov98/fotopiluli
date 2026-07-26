@@ -55,6 +55,8 @@ def handle_message(msg):
     chat_id = msg.get('chat', {}).get('id')
     tariff  = CHAT_TARIFFS.get(chat_id)
     if not tariff:
+        chat_title = msg.get('chat', {}).get('title', '?')
+        logging.info(f'Unrecognized chat: id={chat_id} title="{chat_title}"')
         return
 
     text = msg.get('text') or msg.get('caption') or ''

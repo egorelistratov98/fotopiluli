@@ -282,6 +282,8 @@
     background:rgba(213,53,34,0.06);
   }
   .prize-target strong { font-size:20px; font-weight:800; }
+  .prize-target-wrap { text-align:center; }
+  .prize-target-sub { margin-top:8px; font-size:10px; color:var(--text2); text-transform:uppercase; letter-spacing:1px; }
 
   .mini-progress { display:flex; gap:3px; justify-content:center; margin-top:28px; align-items:flex-end; height:32px; }
   .mp-bar { width:10px; border-radius:3px; background:var(--card2); overflow:hidden; height:32px; display:flex; flex-direction:column; justify-content:flex-end; }
@@ -475,8 +477,11 @@
       Три порога, три награды: 800, 900 и 1000 фотонов.<br/>
       Что именно ждёт на каждом — откроется в конце потока.
     </div>
-    <div class="prize-target">
-      🎁 <strong>800</strong> &nbsp;·&nbsp; 🎁 <strong>900</strong> &nbsp;·&nbsp; 🏆 <strong>1000</strong> &nbsp;фотонов
+    <div class="prize-target-wrap">
+      <div class="prize-target">
+        🎁 <strong>800</strong> &nbsp;·&nbsp; 🎁 <strong>900</strong> &nbsp;·&nbsp; 🏆 <strong>1000</strong>
+      </div>
+      <div class="prize-target-sub">фотонов</div>
     </div>
     <div class="mini-progress" id="mini-progress"></div>
   </div>

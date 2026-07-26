@@ -18,12 +18,11 @@ GITHUB_REPO         = 'egorelistratov98/fotopiluli'
 STUDENTS_FILE       = 'students.json'
 
 CHAT_TARIFFS = {
-    # Старые чаты 9-го потока отключены — юбилейный 10-й поток ждёт новых ID
+    -1004423750799: 'режиссёрская',
+    -1004400415061: 'массовый',
 }
 
 app = Flask(__name__)
-
-recent_unrecognized_chats = []
 
 
 def get_students():
@@ -56,10 +55,6 @@ def handle_message(msg):
     chat_id = msg.get('chat', {}).get('id')
     tariff  = CHAT_TARIFFS.get(chat_id)
     if not tariff:
-        chat_title = msg.get('chat', {}).get('title', '?')
-        logging.info(f'Unrecognized chat: id={chat_id} title="{chat_title}"')
-        recent_unrecognized_chats.append({'id': chat_id, 'title': chat_title})
-        del recent_unrecognized_chats[:-20]
         return
 
     text = msg.get('text') or msg.get('caption') or ''
@@ -134,16 +129,6 @@ def webhook():
 @app.route('/', methods=['GET'])
 def index():
     return 'Bot is running', 200
-
-
-DEBUG_KEY = 'fp10-2yc7k9-tmp'
-
-
-@app.route('/debug/chats', methods=['GET'])
-def debug_chats():
-    if request.args.get('key') != DEBUG_KEY:
-        return 'Not Found', 404
-    return {'unrecognized': recent_unrecognized_chats}, 200
 
 
 if __name__ == '__main__':

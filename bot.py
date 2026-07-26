@@ -23,6 +23,8 @@ CHAT_TARIFFS = {
 
 app = Flask(__name__)
 
+recent_unrecognized_chats = []
+
 
 def get_students():
     url     = f'https://api.github.com/repos/{GITHUB_REPO}/contents/{STUDENTS_FILE}'
@@ -56,6 +58,8 @@ def handle_message(msg):
     if not tariff:
         chat_title = msg.get('chat', {}).get('title', '?')
         logging.info(f'Unrecognized chat: id={chat_id} title="{chat_title}"')
+        recent_unrecognized_chats.append({'id': chat_id, 'title': chat_title})
+        del recent_unrecognized_chats[:-20]
         return
 
     text = msg.get('text') or msg.get('caption') or ''
@@ -130,6 +134,11 @@ def webhook():
 @app.route('/', methods=['GET'])
 def index():
     return 'Bot is running', 200
+
+
+@app.route('/debug/chats', methods=['GET'])
+def debug_chats():
+    return {'unrecognized': recent_unrecognized_chats}, 200
 
 
 if __name__ == '__main__':

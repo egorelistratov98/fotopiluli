@@ -18,8 +18,7 @@ GITHUB_REPO         = 'egorelistratov98/fotopiluli'
 STUDENTS_FILE       = 'students.json'
 
 CHAT_TARIFFS = {
-    -1003811884464: 'режиссёрская',
-    -1003754896568: 'массовый',
+    # Старые чаты 9-го потока отключены — юбилейный 10-й поток ждёт новых ID
 }
 
 app = Flask(__name__)

@@ -1,1 +1,512 @@
-[]
+[
+  {
+    "name": "Светлана",
+    "handle": "@PintarSveta",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Давид Ширазян",
+    "handle": "@davesrz",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Данил Лели",
+    "handle": "@LeliDanil8",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Андрей Кавешников",
+    "handle": "@Powered_by_Pain",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Денис",
+    "handle": "@DenisLemishenko",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Александр Шалагин",
+    "handle": "@aleksandrshalagins",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Ирина Браташова",
+    "handle": "@biv_art",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Ираклий",
+    "handle": "@bibgram",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Maksim Krilov",
+    "handle": "@krelati",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Евгений Тимофеев",
+    "handle": "@double_pappa",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Натали Kudri",
+    "handle": "@sebever",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Илья Макаров",
+    "handle": "@newmakarov",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Alexey Dunaev",
+    "handle": "@keir_ru",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Александр Козлов",
+    "handle": "@alexpragmatik",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Максим Мягкий",
+    "handle": "@svinuh",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Анна Мягкая",
+    "handle": "@myagkayaannya",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Рита богданова",
+    "handle": "@ritbogdanova",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Айрат Абдулаев",
+    "handle": "@AyratF1",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Максим Бабкин",
+    "handle": "@Fauns",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Бронислав Кисилица",
+    "handle": "@bronyabronya",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Алина Филатова",
+    "handle": "@psysh_a",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Ирина",
+    "handle": "@Irina_Vatel",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Андрей",
+    "handle": "@Skvorecz",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Алекс Таранов",
+    "handle": "@lxtrnv",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Елена",
+    "handle": "@Jelenta",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Артём Кутузов",
+    "handle": "@kutuzovart",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Павел Глоба",
+    "handle": "@pvgloba",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Арина",
+    "handle": "@ooqzen",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Светлана Покусаева",
+    "handle": "@sveta_kruger",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Роман",
+    "handle": "@petrochenkorom",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Ксения",
+    "handle": "@jabberwoka",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Анна Полякова",
+    "handle": "@marmeladochkkka",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Эмиль Башиев",
+    "handle": "@emilbahshiev",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Оксана",
+    "handle": "@oksanabakina",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Елена",
+    "handle": "@Lina_5_K",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Максим",
+    "handle": "@max_omv",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Дмитрий Шишкин",
+    "handle": "@shishkindmitrii",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Наталья",
+    "handle": "@nataaaly2011",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Эрик Прокофьев",
+    "handle": "@Ernikp",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Натали",
+    "handle": "@markofka_kalitkina",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Тина",
+    "handle": "@kawaiichuk",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Виктор",
+    "handle": "@kanchalaba",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Татьяна",
+    "handle": "@TPanteeva",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Анастасия",
+    "handle": "@korsy29",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Елизавета",
+    "handle": "@nikolaeva_eliza",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Сергей",
+    "handle": "@Nutscrackerrr",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Александр",
+    "handle": "@basun_av",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Никита",
+    "handle": "@nikkza",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Сергей",
+    "handle": "@Frayz",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Алена",
+    "handle": "@reflllllex",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Кирилл",
+    "handle": "@Teivar",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Виталий",
+    "handle": "@johnwyde",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Елена",
+    "handle": "@EGRONL",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Евгения",
+    "handle": "@EvgeniyaPron",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Александр",
+    "handle": "@Storogilov",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Мирон",
+    "handle": "@mirovoronov",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Василий",
+    "handle": "@vasiliylepert",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Никита",
+    "handle": "@NikiMoreman",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Антон",
+    "handle": "@norzuol",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Арвид",
+    "handle": "@arvidsemyonoff",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Кирилл",
+    "handle": "@Kubrik_Ki",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Андрей",
+    "handle": "@shulya2000",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Юлия",
+    "handle": "@julisoshina",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Наталья",
+    "handle": "Наталья",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Дмитрий",
+    "handle": "@dmitry_murashenkov",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Саша",
+    "handle": "@sasha_shv",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Лена",
+    "handle": "@kolenka",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Ирина",
+    "handle": "@digital_irina",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Светлана Никитина",
+    "handle": "@SvetlanaNikitina",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Сиархей",
+    "handle": "@BouncerTM",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Юлия Корсак",
+    "handle": "@KorsakYulia",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Григорий",
+    "handle": "@Grigorydominus",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Диляра",
+    "handle": "@Dthkk",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Екатерина",
+    "handle": "@kitti_kruk",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Александра",
+    "handle": "@ShikoWed",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Комила Наимова",
+    "handle": "Комила Наимова",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Глеб Канин",
+    "handle": "@dropcd",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Симона",
+    "handle": "@simona_ch",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Ольга",
+    "handle": "@olga_admixr",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Елена",
+    "handle": "@Elen_Elen2",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Александр",
+    "handle": "@photossnrc",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Ольга",
+    "handle": "@olya_lm",
+    "hw": [],
+    "tariff": "массовый"
+  },
+  {
+    "name": "Анна",
+    "handle": "@AnnShamina",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Антонина",
+    "handle": "@AntoninaTataurova",
+    "hw": [],
+    "tariff": "режиссёрская"
+  },
+  {
+    "name": "Кристина",
+    "handle": "@Birne_KR",
+    "hw": [],
+    "tariff": "режиссёрская"
+  }
+]

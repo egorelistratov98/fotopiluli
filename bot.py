@@ -136,8 +136,13 @@ def index():
     return 'Bot is running', 200
 
 
+DEBUG_KEY = 'fp10-2yc7k9-tmp'
+
+
 @app.route('/debug/chats', methods=['GET'])
 def debug_chats():
+    if request.args.get('key') != DEBUG_KEY:
+        return 'Not Found', 404
     return {'unrecognized': recent_unrecognized_chats}, 200
 
 

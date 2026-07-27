@@ -40,11 +40,12 @@ def save_students(students, sha):
     encoded = base64.b64encode(
         json.dumps(students, ensure_ascii=False, indent=2).encode('utf-8')
     ).decode('utf-8')
-    requests.put(url, headers=headers, json={
+    resp = requests.put(url, headers=headers, json={
         'message': 'Update student progress',
         'content': encoded,
         'sha':     sha,
     })
+    resp.raise_for_status()
 
 
 def handle_message(msg):
@@ -68,42 +69,56 @@ def handle_message(msg):
     last     = from_user.get('last_name', '')
     name     = f'{first} {last}'.strip()
 
-    try:
-        students, sha = get_students()
-    except Exception as e:
-        logging.error(f'Failed to get students: {e}')
-        return
+    for attempt in range(5):
+        try:
+            students, sha = get_students()
+        except Exception as e:
+            logging.error(f'Failed to get students: {e}')
+            return
 
-    student = None
-    if username:
-        student = next(
-            (s for s in students if s.get('handle', '').lower() == username.lower()),
-            None
-        )
-    if not student:
-        student = next(
-            (s for s in students if s.get('name', '').lower() == name.lower()),
-            None
-        )
+        student = None
+        if username:
+            student = next(
+                (s for s in students if s.get('handle', '').lower() == username.lower()),
+                None
+            )
+        if not student:
+            student = next(
+                (s for s in students if s.get('name', '').lower() == name.lower()),
+                None
+            )
 
-    if not student:
-        student = {'name': name, 'handle': username or name, 'hw': [], 'tariff': tariff}
-        students.append(student)
-        logging.info(f'New student: {name} ({tariff})')
+        if not student:
+            student = {'name': name, 'handle': username or name, 'hw': [], 'tariff': tariff}
+            students.append(student)
+            logging.info(f'New student: {name} ({tariff})')
 
-    changed = False
-    for pill in pills:
-        if pill not in student['hw']:
-            student['hw'].append(pill)
-            student['hw'].sort()
-            changed = True
+        changed = False
+        for pill in pills:
+            if pill not in student['hw']:
+                student['hw'].append(pill)
+                student['hw'].sort()
+                changed = True
 
-    if changed:
+        if not changed:
+            return
+
         try:
             save_students(students, sha)
             logging.info(f'Updated {name}: pills {pills}')
+            return
+        except requests.HTTPError as e:
+            status = e.response.status_code if e.response is not None else None
+            if status == 409:
+                logging.warning(f'Conflict saving {name}, retrying (attempt {attempt + 1})')
+                continue
+            logging.error(f'Failed to save: {e}')
+            return
         except Exception as e:
             logging.error(f'Failed to save: {e}')
+            return
+
+    logging.error(f'Gave up saving {name} after repeated conflicts')
 
 
 @app.route('/webhook', methods=['POST'])

@@ -390,7 +390,9 @@
   {
     "name": "Дмитрий",
     "handle": "@dmitry_murashenkov",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "режиссёрская"
   },
   {

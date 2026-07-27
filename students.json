@@ -516,7 +516,9 @@
   {
     "name": "Антонина",
     "handle": "@AntoninaTataurova",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "режиссёрская"
   },
   {

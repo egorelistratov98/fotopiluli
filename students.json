@@ -182,7 +182,9 @@
   {
     "name": "Роман",
     "handle": "@petrochenkorom",
-    "hw": [],
+    "hw": [
+      2
+    ],
     "tariff": "режиссёрская"
   },
   {

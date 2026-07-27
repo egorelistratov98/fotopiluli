@@ -360,7 +360,9 @@
   {
     "name": "Арвид",
     "handle": "@arvidsemyonoff",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "режиссёрская"
   },
   {

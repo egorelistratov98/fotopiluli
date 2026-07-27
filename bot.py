@@ -84,7 +84,7 @@ def handle_message(msg):
             )
         if not student:
             student = next(
-                (s for s in students if s.get('name', '').lower() == name.lower()),
+                (s for s in students if s.get('tariff') == tariff and s.get('name', '').lower() == name.lower()),
                 None
             )
 

@@ -76,7 +76,9 @@
   {
     "name": "Alexey Dunaev",
     "handle": "@keir_ru",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "режиссёрская"
   },
   {

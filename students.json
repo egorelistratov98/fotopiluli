@@ -442,7 +442,9 @@
   {
     "name": "Григорий",
     "handle": "@Grigorydominus",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "режиссёрская"
   },
   {

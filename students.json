@@ -32,7 +32,9 @@
   {
     "name": "Александр Шалагин",
     "handle": "@aleksandrshalagins",
-    "hw": [],
+    "hw": [
+      2
+    ],
     "tariff": "режиссёрская"
   },
   {

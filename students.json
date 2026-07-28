@@ -262,7 +262,9 @@
   {
     "name": "Дмитрий Шишкин",
     "handle": "@shishkindmitrii",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "режиссёрская"
   },
   {

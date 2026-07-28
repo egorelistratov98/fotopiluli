@@ -89,9 +89,11 @@ def handle_message(msg):
             )
 
         if not student:
-            student = {'name': name, 'handle': username or name, 'hw': [], 'tariff': tariff}
-            students.append(student)
-            logging.info(f'New student: {name} ({tariff})')
+            logging.warning(
+                f'No match for "{name}" ({username or "no username"}) in {tariff} — '
+                f'pills {pills} not recorded, needs manual review against the sales roster'
+            )
+            return
 
         changed = False
         for pill in pills:

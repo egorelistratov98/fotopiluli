@@ -454,7 +454,9 @@
   {
     "name": "Юлия",
     "handle": "@julisoshina",
-    "hw": [],
+    "hw": [
+      2
+    ],
     "tariff": "режиссёрская"
   },
   {

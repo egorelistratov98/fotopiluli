@@ -250,7 +250,9 @@
   {
     "name": "Анна Полякова",
     "handle": "@marmeladochkkka",
-    "hw": [],
+    "hw": [
+      1
+    ],
     "tariff": "массовый"
   },
   {

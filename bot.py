@@ -60,7 +60,7 @@ def handle_message(msg):
 
     text = msg.get('text') or msg.get('caption') or ''
     found = re.findall(r'#[Пп]илюля\s*(\d+)', text)
-    pills = [int(p) for p in found if 1 <= int(p) <= 10]
+    pills = [int(p) for p in found if 1 <= int(p) <= 11]
     if not pills:
         return
 

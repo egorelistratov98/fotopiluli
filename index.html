@@ -352,7 +352,7 @@
     <div class="how-card">
       <span class="how-icon">⚡</span>
       <div class="how-title">Получи фотоны</div>
-      <div class="how-desc">+100 фотонов за каждую пилюлю. Всего 10 пилюль — максимум 1000 фотонов</div>
+      <div class="how-desc">+100 фотонов за каждую пилюлю. 10 основных пилюль — максимум 1000 фотонов, плюс 11-я бонусная</div>
     </div>
     <div class="how-card">
       <span class="how-icon">🎁</span>
@@ -435,6 +435,13 @@
       </div>
       <div class="pill-row-btn open">10</div>
     </div>
+    <div class="pill-row released">
+      <div class="pill-row-info">
+        <div class="pill-row-num">Пилюля 11 · бонус</div>
+        <div class="pill-row-name">Хаос, который освобождает</div>
+      </div>
+      <div class="pill-row-btn open">11</div>
+    </div>
   </div>
 </div>
 
@@ -494,7 +501,7 @@
 
 <script>
 var RELEASED = [1,2,3,4];
-var HW_PILLS = [1,2,3,4,5,6,7,8,9,10];
+var HW_PILLS = [1,2,3,4,5,6,7,8,9,10,11];
 var COLORS = [
   '#d53522','#e07c3a','#5ecb8a','#5b9cf6','#e74c8b',
   '#f5a623','#4ec9c9','#e06b5c','#8bc34a','#9b7fe8',
@@ -703,7 +710,7 @@ function renderMini() {
   if (!mp) return;
   mp.textContent = '';
   allStudents.forEach(function(s) {
-    var pct  = Math.round((s.photons / 1000) * 100);
+    var pct  = Math.min(100, Math.round((s.photons / 1000) * 100));
     var bar  = document.createElement('div');
     bar.className = 'mp-bar';
     bar.title = s.name + ': ' + s.photons + ' фотонов';

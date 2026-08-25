@@ -129,6 +129,7 @@
   .pill-row-num  { font-size:10px; color:var(--text2); font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:3px; }
   .pill-row-name { font-size:14px; font-weight:600; }
   .pill-row.locked .pill-row-name { color:var(--text2); }
+  .pill-row-note { font-size:11px; font-weight:700; color:var(--red2); margin-top:3px; text-transform:uppercase; letter-spacing:0.3px; }
   .pill-row-btn {
     width:36px; height:36px; border-radius:50%; display:flex;
     align-items:center; justify-content:center; flex-shrink:0;
@@ -352,7 +353,7 @@
     <div class="how-card">
       <span class="how-icon">⚡</span>
       <div class="how-title">Получи фотоны</div>
-      <div class="how-desc">+100 фотонов за каждую пилюлю. 10 основных пилюль — максимум 1000 фотонов, плюс 11-я бонусная</div>
+      <div class="how-desc">+100 фотонов за каждую пилюлю. 9 основных пилюль — максимум 900 фотонов, плюс 11-я бонусная</div>
     </div>
     <div class="how-card">
       <span class="how-icon">🎁</span>
@@ -383,6 +384,7 @@
       <div class="pill-row-info">
         <div class="pill-row-num">Пилюля 3</div>
         <div class="pill-row-name">Пилюля стиля</div>
+        <div class="pill-row-note">Задание без проверки</div>
       </div>
       <div class="pill-row-btn open">3</div>
     </div>
@@ -501,7 +503,7 @@
 
 <script>
 var RELEASED = [1,2,3,4];
-var HW_PILLS = [1,2,3,4,5,6,7,8,9,10,11];
+var HW_PILLS = [1,2,4,5,6,7,8,9,10,11];
 var COLORS = [
   '#d53522','#e07c3a','#5ecb8a','#5b9cf6','#e74c8b',
   '#f5a623','#4ec9c9','#e06b5c','#8bc34a','#9b7fe8',
@@ -523,7 +525,7 @@ function prepareStudents(data) {
       tariff:   s.tariff || 'режиссёрская',
       color:    COLORS[i % COLORS.length],
       initials: s.name.split(' ').map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase(),
-      photons:  (s.hw || []).length * 100
+      photons:  (s.hw || []).filter(function(p){ return HW_PILLS.indexOf(p) !== -1; }).length * 100
     };
   });
 }

@@ -545,7 +545,7 @@ function makeDot(p, hw, size) {
   el.className = 'dot ' + (done ? 'done' : avail ? 'avail' : 'locked');
   el.title  = done ? ('П' + p + ' сдана ✓') : avail ? ('П' + p + ' — ждём ДЗ') : ('П' + p + ' — заперта');
   if (size) { el.style.width = size + 'px'; el.style.height = size + 'px'; }
-  if (!done) el.textContent = p;
+  el.textContent = p;
   return el;
 }
 

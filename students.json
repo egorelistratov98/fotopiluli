@@ -1,5 +1,11 @@
 [
   {
+    "name": "Дарья Смирнова",
+    "handle": "@dsmirnowa",
+    "hw": [1, 2, 4, 5, 6],
+    "tariff": "режиссёрская"
+  },
+  {
     "name": "Светлана",
     "handle": "@PintarSveta",
     "hw": [
